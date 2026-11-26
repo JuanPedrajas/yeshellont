@@ -117,20 +117,23 @@
       var start = performance.now();
       var timer = document.getElementById('timer');
       var verdict = document.getElementById('verdict');
+      // [starts at (seconds), message] — the last entry whose start has been reached wins
       var lines = [
-        [1,   'Still within the 1 s window. Impressive restraint.'],
-        [3,   'Past 1 s. Somewhere a nohello.net link is being drafted.'],
-        [10,  'A human being is reading, thinking, or both. Scandalous.'],
-        [30,  'Please do not send the link. They are typing.'],
-        [60,  'One full minute. The world is still turning, as promised.'],
-        [Infinity, 'You have been waiting a while. Perhaps ask the question, or say hello. Both are allowed.']
+        [0,   'Still within the 1 s window. Impressive restraint.'],
+        [1,   'Past 1 s. Somewhere a nohello.net link is being drafted.'],
+        [3,   'A human being is reading, thinking, or both. Scandalous.'],
+        [10,  'Please do not send the link. They are typing.'],
+        [30,  'Half a minute. The world is still turning, as promised.'],
+        [60,  'One full minute. Perhaps ask the question, or say hello. Both are allowed.']
       ];
       function tick() {
         var s = (performance.now() - start) / 1000;
         timer.textContent = s.toFixed(1) + ' s';
+        var msg = lines[0][1];
         for (var i = 0; i < lines.length; i++) {
-          if (s < lines[i][0]) { verdict.textContent = lines[i][1]; break; }
+          if (s >= lines[i][0]) msg = lines[i][1];
         }
+        verdict.textContent = msg;
       }
       setInterval(tick, 100);
     })();
