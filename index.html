@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>yes-hello — nohello is not a stopwatch</title>
-  <meta name="description" content="nohello.net is about not sending a lone 'hello'. It is not about replying within 1 second.">
-  <meta property="og:title" content="yes-hello">
-  <meta property="og:description" content="nohello.net is about not sending a lone 'hello'. It is not about replying within 1 second.">
+  <title>No No-hello</title>
+  <meta name="description" content="Don't just say hello. But don't put a timer between the hello and the message either.">
+  <meta property="og:title" content="No No-hello">
+  <meta property="og:description" content="Don't just say hello. But don't put a timer between the hello and the message either.">
   <style>
     :root {
       --bg: #fffdf7; --fg: #222; --muted: #666; --accent: #e8590c;
@@ -21,23 +21,31 @@
       font: 18px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
     .wrap { max-width: 680px; margin: 0 auto; padding: 48px 20px 64px; }
-    h1.greeting { font-size: clamp(2.2rem, 8vw, 3.6rem); line-height: 1.1; margin: 0 0 32px; color: var(--accent); }
+    h1 { font-size: clamp(2.4rem, 9vw, 4rem); line-height: 1.05; margin: 0 0 8px; color: var(--accent); }
+    .tagline { font-size: 1.15rem; color: var(--muted); margin: 0 0 36px; }
     h2 { margin: 0 0 8px; font-size: 1.2rem; }
     p { margin: 0 0 12px; }
     .aside { color: var(--muted); font-size: .95rem; }
     section { margin-bottom: 36px; }
+    .rules p { padding-left: 14px; border-left: 4px solid var(--accent); }
     .card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 12px; padding: 20px;
     }
-    .timer {
-      font: 700 2.6rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
-      color: var(--accent); margin: 4px 0 8px;
+    .chat { display: flex; flex-direction: column; gap: 8px; }
+    .msg {
+      max-width: 85%; padding: 8px 14px; border-radius: 16px;
+      background: var(--bg); border: 1px solid var(--border);
     }
-    .verdict { font-weight: 600; min-height: 1.6em; }
-    table { width: 100%; border-collapse: collapse; font-size: .95rem; }
-    td { padding: 6px 0; border-bottom: 1px dashed var(--border); }
-    td:last-child { text-align: right; color: var(--muted); }
+    .msg.me { align-self: flex-end; background: var(--accent); color: #fff; border-color: transparent; }
+    .meta { font-size: .8rem; color: var(--muted); align-self: center; text-align: center; }
+    .example { border-left: 5px solid; border-radius: 8px; padding: 12px 14px; margin-top: 16px; }
+    .example h3 { margin: 0 0 10px; font-size: 1rem; }
+    .example.good { border-color: #2f9e44; background: rgba(47, 158, 68, .10); }
+    .example.good h3 { color: #2f9e44; }
+    .example.bad { border-color: #e03131; background: rgba(224, 49, 49, .10); }
+    .example.bad h3 { color: #e03131; }
+    .example .caption { margin: 10px 0 0; font-size: .9rem; color: var(--muted); }
     form { display: flex; gap: 8px; flex-wrap: wrap; }
     input, button {
       font: inherit; padding: 8px 12px; border-radius: 8px;
@@ -51,38 +59,50 @@
 </head>
 <body>
   <main class="wrap">
-    <h1 class="greeting">Yes Hello, <span id="name">Boss</span>!</h1>
+    <h1>No No-hello</h1>
+    <p class="tagline">Hello, <span id="name">Boss</span>. I was typing. Yes, really. No, not slowly.</p>
 
-    <section class="manifesto">
-      <p>nohello.net asks you not to send a lone "hello" and then wait.</p>
-      <p>It does not say that a reply must arrive in under one second.</p>
-      <p>It does not say that a link is a substitute for a sentence.</p>
-      <p>It is ok to be a human being who was making coffee, in a meeting, or thinking.</p>
-      <p class="aside">The principle is "put the question in the first message." Nobody wrote a clause about latency SLAs. If we had, they would have been in the footnotes, with a pager rotation.</p>
-      <p class="aside">Sending nohello.net to someone for taking 1.2 seconds is the most "hello, are you there?" thing you can do. It is a hello with extra steps.</p>
+    <section class="rules">
+      <p>It's okay to think about what you are going to type before you send.</p>
+      <p>A one-second timer between "hello" and the link is not a principle. It's a speedrun.</p>
+      <p>You've read the whole of nohello.net, and the only part you kept was the URL.</p>
+      <p>If you want to type something, try saying hello back.</p>
     </section>
 
-    <section class="card" aria-live="polite">
-      <h2>Live response-time audit</h2>
-      <p class="aside">Time since you opened this page and had to wait for an answer:</p>
-      <div class="timer" id="timer">0.0 s</div>
-      <p class="verdict" id="verdict">Still within the 1 s window. Impressive restraint.</p>
+    <section class="card">
+      <h2>What the principle looks like</h2>
+      <div class="example good">
+        <h2>✅ Good example</h3>
+        <div class="chat">
+          <div class="msg me">Hello</div>
+          <div class="meta">2 minutes later</div>
+          <div class="msg me">Can you review the deploy script when you get a minute *link to the scripts*?</div>
+        </div>
+        <p class="caption">Said hello, went to find the deploy script link, came back and asked. Nobody sent a website. Nobody died. The world kept turning, as promised.</p>
+      </div>
+
+      <div class="example bad">
+        <h2>❌ Bad example</h3>
+        <div class="chat">
+          <div class="msg me">Hello</div>
+          <div class="meta">0.8 seconds later. Aldo is typing…</div>
+          <div class="msg">nohello.net</div>
+          <div class="meta">Sent first. Other person still typing…</div>
+          <div class="msg me">Bro what the hell man I was thinking!!</div>
+          <div class="meta">Delivered -1.2 seconds too late.</div>
+        </div>
+        <p class="caption">A hello, a countdown and a passive-aggressive link, clearly showing a complete missunderstanding of how communication works.</p>
+      </div>
     </section>
 
     <section>
       <h2>Reasonable reply times</h2>
-      <table>
-        <tr><td>Sub-second</td><td>Bots, and people who are not working</td></tr>
-        <tr><td>A few seconds</td><td>Reading what you wrote</td></tr>
-        <tr><td>A few minutes</td><td>Thinking about what you wrote</td></tr>
-        <tr><td>An hour</td><td>Doing the work you asked about</td></tr>
-        <tr><td>Linking nohello.net at 1.1 s</td><td>Not in the spec</td></tr>
-      </table>
+      <p class="aside">Reading, thinking, and being in a meeting all count as explanations for not sending the question right after the hello. Surprisingly, so does going to the bathroom.</p>
     </section>
 
     <section class="setname">
-      <h2>Set the greeting</h2>
-      <p class="aside">Personalise it, then send the page to whoever needs it. The name goes in the URL, so no server is involved.</p>
+      <h2>Personalise it</h2>
+      <p class="aside">Set the name, then send the page. The name goes in the URL, so no server is involved.</p>
       <form id="name-form" autocomplete="off">
         <input id="name-input" type="text" maxlength="20" placeholder="their name" aria-label="Name to greet" required>
         <button type="submit">Say hello</button>
@@ -91,7 +111,7 @@
     </section>
 
     <footer class="footer">
-      <p>Inspired by, and in full agreement with the intent of, <a href="https://nohello.net/">nohello.net</a>. Just not with the stopwatch.</p>
+      <p>In full agreement with <a href="https://nohello.net/">nohello.net</a>. I just wish its fans read past the URL. There is no SLA on saying "hi". I checked the footer. This is the footer.</p>
     </footer>
   </main>
 
@@ -109,33 +129,9 @@
         var v = clean(document.getElementById('name-input').value);
         if (!v) { status.textContent = 'Letters, numbers, and spaces only.'; return; }
         nameEl.textContent = v;
-        var url = location.origin + location.pathname + '?name=' + encodeURIComponent(v);
-        history.replaceState(null, '', url);
-        status.textContent = 'Set. Copy the address bar and send it. Politely, and after at least 1.1 seconds.';
+        history.replaceState(null, '', location.pathname + '?name=' + encodeURIComponent(v));
+        status.textContent = 'Set. Copy the address bar and send it.';
       });
-
-      var start = performance.now();
-      var timer = document.getElementById('timer');
-      var verdict = document.getElementById('verdict');
-      // [starts at (seconds), message] — the last entry whose start has been reached wins
-      var lines = [
-        [0,   'Still within the 1 s window. Impressive restraint.'],
-        [1,   'Past 1 s. Somewhere a nohello.net link is being drafted.'],
-        [3,   'A human being is reading, thinking, or both. Scandalous.'],
-        [10,  'Please do not send the link. They are typing.'],
-        [30,  'Half a minute. The world is still turning, as promised.'],
-        [60,  'One full minute. Perhaps ask the question, or say hello. Both are allowed.']
-      ];
-      function tick() {
-        var s = (performance.now() - start) / 1000;
-        timer.textContent = s.toFixed(1) + ' s';
-        var msg = lines[0][1];
-        for (var i = 0; i < lines.length; i++) {
-          if (s >= lines[i][0]) msg = lines[i][1];
-        }
-        verdict.textContent = msg;
-      }
-      setInterval(tick, 100);
     })();
   </script>
 </body>
